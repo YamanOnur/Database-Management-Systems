@@ -1,2 +1,2 @@
-# Database-Management-Systems-Course-Ceng-302
+# Database-Management-Systems-Course
 Assignments and Term Project
