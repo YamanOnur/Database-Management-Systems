@@ -1,0 +1,50 @@
+                                      SQL QUERIES
+1)
+SELECT Registered.e-mail,Resume.salary
+FROM Registered R1,Resume R2
+WHERE R1.Registered_Preferred_Disciplines=“Computer Engineering" 
+      AND R1.Authorised_Country="Germany" 
+      AND R1.e-mail=R2.e-mail;
+2)
+SELECT R.Name
+FROM Recruiter R
+WHERE R.RegNo IN (SELECT U.RegNo
+                  FROM University U
+                  WHERE U.RegNo IN (SELECT A.RegNo
+                                    FROM Activity A
+                                    WHERE A.Category="A" 
+                                          AND A.RegNo IN (SELECT C.RegNo
+                                                          FROM Confrerence C)));
+3)
+SELECT J.RecruiterName
+FROM JobAd J
+WHERE NOT EXISTS (SELECT JA.Visit
+                  FROM JobAd JA);
+6)
+SELECT AVG(R.Salary)
+FROM Resume R
+WHERE EXISTS (SELECT PRD.MainCategory
+              FROM Registered_Preffered_Diciplines PRD
+              PRD.e-mail=R.e-mail)
+      AND R.e-mail=PRD.e-mail
+ORDER BY Salary ASC
+7)
+SELECT T.trainer,T.title,Count(T.Program)
+FROM Training T
+WHERE EXISTS (SELECT E.RegNo
+              FROM Enrol E
+              HAVING Count(*)>30)
+      AND T.RegNo=E.RegNo
+8)
+SELECT R.Name,R.Surname
+FROM Registered R
+WHERE NOT EXISTS (SELECT RE.e-mail
+                  FROM Resume RE)
+      AND R.e-mail=RE.e-mail
+9)
+SELECT R.Name,R.Surname
+FROM Registered R
+WHERE EXISTS (SELECT A.e-mail
+              FROM Authorised_Country A
+              WHERE R.Nation!=A.Country)
+      AND R.e-mail=A.e-mail
